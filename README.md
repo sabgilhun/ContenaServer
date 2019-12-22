@@ -25,4 +25,4 @@ docker run -d --name new_arrival_job new_arrival_crawling:latest
 ```
 docker exec -t -i new_arrival_job /bin/bash
 ```
-- t - i(tty, interactive): contatiner의 bash에 커맨드를 넣고 응답을 보기 위한 옵션.
+-t - i(tty, interactive): contatiner의 bash에 커맨드를 넣고 응답을 보기 위한 옵션.
