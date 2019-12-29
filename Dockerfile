@@ -13,8 +13,8 @@ RUN apt-get update \
 # Copy hello-cron file to the cron.d directory
 COPY cron_job /etc/cron.d/cron_job
 
-# Copy TestCron.py file to root directory
-COPY TestCron.py TestCron.py
+# Copy python_script folder to root directory
+COPY python_script python_script
 
 # Give execution rights on the cron job
 RUN chmod 0644 /etc/cron.d/cron_job
