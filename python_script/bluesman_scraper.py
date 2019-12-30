@@ -14,3 +14,9 @@ def scrap():
     soup = BeautifulSoup(request.text, 'html.parser')
 
     print(soup.encode('utf8'))
+    for item in soup.find_all('div', {'class': 'col xans-record-'}):
+        print(item.find('img', {'class': 'thumb_image'})['src'].replace("//", ""))
+        print(item.find('span', {'class': 'product_brand'}).text)
+        print(item.find('strong', {'class': 'price'}).text.replace("KRW ", ""))
+        print(item.find('div', {'class': 'product_title'}).find('span').text)
+        print('\n')
