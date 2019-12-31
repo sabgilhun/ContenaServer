@@ -10,7 +10,7 @@ RUN apt-get update \
   && ln -s /usr/bin/python3 python \
   && pip3 install --upgrade pip
 
-# Copy python_script folder to root directory
+# Copy requirements.txt to root directory and run python dependency
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
@@ -19,6 +19,9 @@ COPY cron_job /etc/cron.d/cron_job
 
 # Copy python_script folder to root directory
 COPY python_script python_script
+
+# Copy Credential file to root directory
+COPY contena-5c99b-firebase-adminsdk-2lmrx-2bf717ce3a.json contena-5c99b-firebase-adminsdk-2lmrx-2bf717ce3a.json
 
 # Give execution rights on the cron job
 RUN chmod 0644 /etc/cron.d/cron_job
