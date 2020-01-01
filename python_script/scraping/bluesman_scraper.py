@@ -13,8 +13,10 @@ def scrap():
 
     soup = BeautifulSoup(request.text, 'html.parser')
 
-    list(map(__to_json_parsable, soup.find_all('div', {'class': 'col xans-record-'})))
+    data = list(map(__to_json_parsable, soup.find_all('div', {'class': 'col xans-record-'})))
     print('complete scraping: ' + target_url)
+
+    return data
 
 
 def __to_json_parsable(item):

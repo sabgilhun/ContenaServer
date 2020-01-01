@@ -1,12 +1,10 @@
-import datetime
-import bluesman_scraper
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import db
+from _datetime import datetime
+from database.db_handler import *
+from scraping.scraping_handler import *
 
 if __name__ == '__main__':
-    print("Cron job has started at %s" % datetime.datetime.now())
-    bluesman_scraper.scrap()
-    cred = credentials.Certificate("../contena-5c99b-firebase-adminsdk-2lmrx-2bf717ce3a.json")
-    print(firebase_admin.initialize_app(cred, {'databaseURL': 'https://contena-5c99b.firebaseio.com'}))
+    print("Cron job has started at %s" % datetime.now())
 
+    db_init()
+    for scraping_data in data_generator_with_scraping():
+        db_set_data(scraping_data['path'], scraping_data['data'])
