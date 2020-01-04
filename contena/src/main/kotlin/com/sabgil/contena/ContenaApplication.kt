@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 class ContenaApplication {
 
     @RequestMapping("/")
-    fun home(): String {
-        return "hello docker world"
-    }
+    fun home() = "hello docker world"
 }
 
 fun main(args: Array<String>) {
