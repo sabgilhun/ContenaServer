@@ -8,12 +8,13 @@ def extract_new_arrival_item(old_items, new_items):
     return list(filter(lambda x: x not in old_items, new_items))
 
 
-def create_new_arrival_post_model(shop_name, new_items):
+def create_new_arrival_post(time_stamp, shop_name, shop_logo, new_items):
     if not new_items:
         return new_items
     else:
         post_dict = dict()
+        post_dict['time_stamp'] = time_stamp
         post_dict['shop_name'] = shop_name
-        post_dict['logo'] = 'dummy'  # TODO 사이트 로고 스크래핑 할 방식 고민해서 적용해야함
+        post_dict['logo'] = shop_logo
         post_dict['new_item'] = new_items
         return post_dict
