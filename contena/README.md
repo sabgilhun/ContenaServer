@@ -8,6 +8,13 @@
 
 ## 실행 Command 정리
 
+### jar file build
+```
+./gradlew build
+```
+jar 파일 생성 위치는 build/libs
+
+
 ### Docker image build
 ```
 docker build -t rest_api_server:latest
