@@ -7,7 +7,7 @@ post_database_path = 'post_data/'
 
 
 def init():
-    cred = credentials.Certificate("../contena-5c99b-firebase-adminsdk-2lmrx-2bf717ce3a.json")
+    cred = credentials.Certificate("../firebase_key.json")
     firebase_admin.initialize_app(cred, {'databaseURL': 'https://contena-5c99b.firebaseio.com'})
     print('complete db initialize')
 

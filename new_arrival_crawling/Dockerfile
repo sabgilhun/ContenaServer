@@ -21,7 +21,7 @@ COPY cron_job /etc/cron.d/cron_job
 COPY python_script python_script
 
 # Copy Credential file to root directory
-COPY contena-5c99b-firebase-adminsdk-2lmrx-2bf717ce3a.json contena-5c99b-firebase-adminsdk-2lmrx-2bf717ce3a.json
+COPY firebase_key.json firebase_key.json
 
 # Give execution rights on the cron job
 RUN chmod 0644 /etc/cron.d/cron_job
