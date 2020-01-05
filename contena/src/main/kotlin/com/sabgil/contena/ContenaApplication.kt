@@ -6,12 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @SpringBootApplication
-@RestController
-class ContenaApplication {
-
-    @RequestMapping("/")
-    fun home() = "hello docker world"
-}
+class ContenaApplication
 
 fun main(args: Array<String>) {
     runApplication<ContenaApplication>(*args)
