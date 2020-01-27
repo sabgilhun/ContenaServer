@@ -15,12 +15,14 @@ services:
       MYSQL_ROOT_PASSWORD: "1234"
     networks:
       - db-network
+    container_name: db
 
   crawling:
     build:
       context: ./crawling
     networks:
       - db-network
+    container_name: crawling
 
   rest-api:
     build:
@@ -29,3 +31,4 @@ services:
       - db-network
     ports:
       - "8080:8080"
+    container_name: rest-api
