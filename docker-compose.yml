@@ -1,0 +1,30 @@
+version: "3.7"
+
+networks:
+  db-network:
+    external: false
+
+services:
+  db:
+    image: mysql
+    volumes:
+      - ./docker/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+    networks:
+      - db-network
+
+  crawling:
+    build:
+      context: ./crawling
+    networks:
+      - db-network
+
+  rest-api:
+    build:
+      context: ./rest-api
+    networks:
+      - db-network
+    ports:
+      - "8080:8080"
+
