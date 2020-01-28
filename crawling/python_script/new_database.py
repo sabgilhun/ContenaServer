@@ -12,7 +12,7 @@ post_insert_sql = """
                  """
 
 item_select_sql = """
-        SELECT * FROM item WHERE shop_name=%s
+        SELECT shop_name,product_name,brand,image_url,page_url,price FROM item WHERE shop_name=%s
         """
 
 post_select_sql = """
@@ -21,7 +21,7 @@ post_select_sql = """
 
 
 def connect_contena_db():
-    return pymysql.connect(host='db', user='root', password='1234', db='contena', charset='utf8',
+    return pymysql.connect(host='127.0.0.1', port=3306, user='root', password='1234', db='contena', charset='utf8',
                            cursorclass=pymysql.cursors.DictCursor)
 
 
@@ -39,7 +39,7 @@ def select_one_post_id_with_shop_name(shop_name, cursor=None):
     if not cursor:
         cursor = connect_contena_db().cursor()
 
-    cursor.execute(post_select_sql, shop_name)
+    cursor.execute(post_select_sql, (shop_name,))
     return cursor.fetchone()
 
 
@@ -47,7 +47,7 @@ def select_item_with_shop_name(shop_name, cursor=None):
     if not cursor:
         cursor = connect_contena_db().cursor()
 
-    cursor.execute(item_select_sql, shop_name)
+    cursor.execute(item_select_sql, (shop_name,))
     return cursor.fetchall()
 
 
@@ -64,7 +64,7 @@ def begin_item_and_post_insert(new_items, shop_logo_url):
     try:
         with connection.cursor() as cursor:
             insert_post(cursor, post)
-            post_id = select_one_post_id_with_shop_name(cursor, shop_name)
+            post_id = select_one_post_id_with_shop_name(shop_name, cursor)['id']
             insert_item(cursor, new_items, post_id)
             connection.commit()
     finally:
