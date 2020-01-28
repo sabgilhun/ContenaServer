@@ -1,5 +1,5 @@
 from _datetime import datetime
-from scraping.scraping_handler import *
+from scraping.scraper_handler import *
 from model_logic.new_arrival import *
 import database
 
