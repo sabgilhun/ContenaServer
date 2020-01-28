@@ -11,6 +11,10 @@ post_insert_sql = """
                  VALUES (%s, %s, %s)
                  """
 
+item_select_sql = """
+        SELECT * FROM item WHERE shop_name=%s
+        """
+
 post_select_sql = """
         SELECT post_id FROM post WHERE shop_name=%s ORDER BY post_id DESC
         """
@@ -31,6 +35,22 @@ def insert_post(cursor, post):
     cursor.execute(post_insert_sql, (post['shop_name'], post['shop_logo_url'], post['upload_date']))
 
 
+def select_one_post_id_with_shop_name(shop_name, cursor=None):
+    if not cursor:
+        cursor = connect_contena_db().cursor()
+
+    cursor.execute(post_select_sql, shop_name)
+    return cursor.fetchone()
+
+
+def select_item_with_shop_name(shop_name, cursor=None):
+    if not cursor:
+        cursor = connect_contena_db().cursor()
+
+    cursor.execute(item_select_sql, shop_name)
+    return cursor.fetchall()
+
+
 def begin_item_and_post_insert(new_items, shop_logo_url):
     shop_name = new_items[0]['shop_name']
 
@@ -44,10 +64,8 @@ def begin_item_and_post_insert(new_items, shop_logo_url):
     try:
         with connection.cursor() as cursor:
             insert_post(cursor, post)
-            cursor.execute(post_select_sql, shop_name)
-            post_id = cursor.fetchone()
+            post_id = select_one_post_id_with_shop_name(cursor, shop_name)
             insert_item(cursor, new_items, post_id)
             connection.commit()
-
     finally:
         connection.close()
