@@ -16,7 +16,7 @@ item_select_sql = """
         """
 
 post_select_sql = """
-        SELECT post_id FROM post WHERE shop_name=%s ORDER BY post_id DESC
+        SELECT id FROM post WHERE shop_name=%s ORDER BY id DESC
         """
 
 
