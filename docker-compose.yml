@@ -2,23 +2,28 @@ version: "3.7"
 
 networks:
   db-network:
-    external: false
 
 services:
   db:
     image: mysql
     volumes:
-      - ./docker/data:/var/lib/mysql
+      # - ./docker/data:/var/lib/mysql
+      - ./db-init:/docker-entrypoint-initdb.d
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: "1234"
     networks:
       - db-network
+    ports:
+     - '3306:3306'
+    container_name: db
 
   crawling:
     build:
       context: ./crawling
     networks:
       - db-network
+    container_name: crawling
 
   rest-api:
     build:
@@ -27,4 +32,4 @@ services:
       - db-network
     ports:
       - "8080:8080"
-
+    container_name: rest-api
