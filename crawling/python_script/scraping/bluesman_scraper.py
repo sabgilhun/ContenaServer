@@ -34,10 +34,11 @@ def scrap_shop_logo():
 
 def __to_json_parsable(item):
     json_parsable = dict()
-    json_parsable['link'] = base_url + item.find('div', {'class': 'product_title'}).find('a')['href']
-    json_parsable['image'] = item.find('img', {'class': 'thumb_image'})['src'].replace("//", "http://")
+    json_parsable['shop_name'] = 'bluesman'
+    json_parsable['product_name'] = item.find('div', {'class': 'product_title'}).find('span').text
     json_parsable['brand'] = item.find('span', {'class': 'product_brand'}).text
+    json_parsable['image_url'] = item.find('img', {'class': 'thumb_image'})['src'].replace("//", "http://")
+    json_parsable['page_url'] = base_url + item.find('div', {'class': 'product_title'}).find('a')['href']
     json_parsable['price'] = item.find('strong', {'class': 'price'}).text.replace("KRW ", "")
-    json_parsable['product'] = item.find('div', {'class': 'product_title'}).find('span').text
 
     return json_parsable
