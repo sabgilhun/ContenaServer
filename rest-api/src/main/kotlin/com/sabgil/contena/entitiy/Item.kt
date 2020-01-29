@@ -34,7 +34,15 @@ data class Item(
         @get: NotBlank
         var price: String = "",
 
-        @Column(name = "post_id")
+        @ManyToOne
         @get: NotBlank
-        var postId: Long = 0
-)
+        @JoinColumn(name = "post_id")
+        var post: Post? = null
+) {
+    override fun toString(): String {
+        return "Item(id=$id, shopName='$shopName', productName='$productName'," +
+                " brand='$brand', imageUrl='$imageUrl', pageUrl='$pageUrl', price='$price')"
+    }
+}
+
+
