@@ -12,6 +12,7 @@ CREATE TABLE post
 
 CREATE TABLE item
 (
+    id INT (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     shop_name VARCHAR(100) NOT NULL,
     product_name VARCHAR (100) NOT NULL,
     brand VARCHAR (100) NOT NULL,
@@ -19,6 +20,5 @@ CREATE TABLE item
     page_url VARCHAR (100) NOT NULL,
     price VARCHAR (100) NOT NULL,
     post_id INT (11) NOT NULL,
-    PRIMARY KEY(shop_name,product_name),
     FOREIGN KEY (post_id) REFERENCES post (id)
 );
