@@ -3,18 +3,18 @@ package com.sabgil.contena.entitiy
 import javax.persistence.*
 
 @Entity
-class Post(
+class PostEntity(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long = 0,
 
         @OneToOne
         @JoinColumn(name = "shop_name")
-        var shop: Shop? = null,
+        var shopEntity: ShopEntity? = null,
 
         @Column(name = "upload_date")
         var uploadDate: String = "",
 
-        @OneToMany(mappedBy = "post")
-        var newItems: List<Item>? = null
+        @OneToMany(mappedBy = "postEntity")
+        var itemEntities: List<ItemEntity>? = null
 )

@@ -3,7 +3,7 @@ package com.sabgil.contena.entitiy
 import javax.persistence.*
 
 @Entity
-class Shop(
+class ShopEntity(
         @Id
         @Column(name = "shop_name")
         var shopName: String = "",
@@ -14,6 +14,6 @@ class Shop(
         @Column(name = "subscriber_count")
         var subscriberCount: Long = 0,
 
-        @OneToOne(mappedBy = "shop")
-        var post: Post? = null
+        @OneToOne(mappedBy = "shopEntity")
+        var postEntity: PostEntity? = null
 )

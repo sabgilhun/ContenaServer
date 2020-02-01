@@ -1,11 +1,10 @@
 package com.sabgil.contena.entitiy
 
 import javax.persistence.*
-import javax.validation.constraints.NotBlank
 
 
 @Entity
-class Item(
+class ItemEntity(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long = 0,
@@ -30,5 +29,5 @@ class Item(
 
         @ManyToOne
         @JoinColumn(name = "post_id")
-        var post: Post? = null
+        var postEntity: PostEntity? = null
 )
