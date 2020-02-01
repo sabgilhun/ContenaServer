@@ -9,11 +9,12 @@ if __name__ == '__main__':
 
     for scraping_data in new_arrival_data_generator_with_scraping():
         shop_name = scraping_data['shop_name']
-        shop_logo = scraping_data['shop_logo']
+        shop_logo_url = scraping_data['shop_logo_url']
+
         new_scrapped_items = scraping_data['scrapped_item']
         old_scrapped_items = database.select_item_with_shop_name(shop_name)
 
         new_arrival_items = extract_new_arrival_item(old_scrapped_items, new_scrapped_items)
+
         if new_arrival_items:
-            print("new items!!")
-            database.begin_item_and_post_insert(new_arrival_items, shop_logo)
+            database.insert_shop_post_item_entity(new_arrival_items, shop_name, shop_logo_url)
