@@ -8,11 +8,9 @@ class Post(
         @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long = 0,
 
-        @Column(name = "shop_name")
-        var shopName: String = "",
-
-        @Column(name = "shop_logo_url")
-        var shopLogoUrl: String = "",
+        @OneToOne
+        @JoinColumn(name = "shop_name")
+        var shop: Shop? = null,
 
         @Column(name = "upload_date")
         var uploadDate: String = "",
