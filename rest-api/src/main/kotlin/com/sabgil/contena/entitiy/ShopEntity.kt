@@ -1,8 +1,11 @@
 package com.sabgil.contena.entitiy
 
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.OneToOne
 
-@Entity
+@Entity(name = "shop")
 class ShopEntity(
         @Id
         @Column(name = "shop_name")
@@ -15,5 +18,8 @@ class ShopEntity(
         var subscriberCount: Long = 0,
 
         @OneToOne(mappedBy = "shopEntity")
-        var postEntity: PostEntity? = null
+        var postEntity: PostEntity? = null,
+
+        @OneToOne(mappedBy = "shopEntity")
+        var subscriptionEntity: SubscriptionEntity? = null
 )

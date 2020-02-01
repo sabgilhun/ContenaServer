@@ -9,6 +9,7 @@ data class GetPostListResponse(
 ) {
     data class Post(
             val postId: Long,
+            val uploadDate: String,
             val shopName: String,
             val shopLogoUrl: String,
             val newItemList: List<NewItem>
@@ -23,17 +24,22 @@ data class GetPostListResponse(
 
     companion object {
         fun from(postEntities: List<PostEntity>): GetPostListResponse {
-            return GetPostListResponse(
-                    postEntities.last().id,
-                    postEntities.map { it.mapToPost() }
-            )
+            return if (postEntities.isEmpty()) {
+                GetPostListResponse(lastCursor = -1, postList = emptyList())
+            } else {
+                GetPostListResponse(
+                        lastCursor = postEntities.last().id,
+                        postList = postEntities.map { it.mapToPost() }
+                )
+            }
         }
 
         private fun PostEntity.mapToPost() = Post(
                 postId = id,
+                uploadDate = uploadDate,
                 shopName = shopEntity?.shopName ?: "",
                 shopLogoUrl = shopEntity?.shopLogoUrl ?: "",
-                newItemList = itemEntities?.map { it.mapToNewItem() } ?: emptyList()
+                newItemList = itemEntities?.subList(0, 5)?.map { it.mapToNewItem() } ?: emptyList()
         )
 
         private fun ItemEntity.mapToNewItem() = NewItem(

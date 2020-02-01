@@ -2,7 +2,7 @@ package com.sabgil.contena.entitiy
 
 import javax.persistence.*
 
-@Entity
+@Entity(name = "post")
 class PostEntity(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
