@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 base_url = 'http://bluesman.co.kr'
-
+shop_name = 'bluesman'
 
 def scrap_new_arrival_item():
     # bluesman 신상품 화면 url
@@ -34,7 +34,7 @@ def scrap_shop_logo():
 
 def __generate_dict_item(item):
     item_dict = dict()
-    item_dict['shop_name'] = 'bluesman'
+    item_dict['shop_name'] = shop_name
     item_dict['product_name'] = item.find('div', {'class': 'product_title'}).find('span').text
     item_dict['brand'] = item.find('span', {'class': 'product_brand'}).text
     item_dict['image_url'] = item.find('img', {'class': 'thumb_image'})['src'].replace("//", "http://")
