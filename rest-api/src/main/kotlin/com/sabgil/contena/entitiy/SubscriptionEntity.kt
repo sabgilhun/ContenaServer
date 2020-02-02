@@ -6,7 +6,7 @@ import javax.persistence.*
 class SubscriptionEntity(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        var id: Long = 0,
+        var id: Long? = null,
 
         @Column(name = "user_id")
         var userId: String = "",

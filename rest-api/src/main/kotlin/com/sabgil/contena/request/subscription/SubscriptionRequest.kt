@@ -1,8 +1,8 @@
 package com.sabgil.contena.request.subscription
 
-import org.springframework.web.bind.annotation.RequestParam
+import com.fasterxml.jackson.annotation.JsonProperty
 
 data class SubscriptionRequest(
-        @RequestParam("user_id") var userId: String = "",
-        @RequestParam("shop_name") var shopName: String = ""
+        @JsonProperty("user_id") var userId: String = "",
+        @JsonProperty("shop_name") var shopName: String = ""
 )
