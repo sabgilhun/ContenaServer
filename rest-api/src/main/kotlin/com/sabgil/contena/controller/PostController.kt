@@ -1,9 +1,7 @@
 package com.sabgil.contena.controller
 
 import com.sabgil.contena.entitiy.PostEntity
-import com.sabgil.contena.repository.ItemRepository
 import com.sabgil.contena.repository.PostRepository
-import com.sabgil.contena.repository.ShopRepository
 import com.sabgil.contena.repository.SubscriptionRepository
 import com.sabgil.contena.response.post.GetPostListResponse
 import org.springframework.web.bind.annotation.GetMapping

@@ -1,6 +1,5 @@
 package com.sabgil.contena.controller
 
-import com.sabgil.contena.entitiy.ShopEntity
 import com.sabgil.contena.repository.ShopRepository
 import com.sabgil.contena.repository.SubscriptionRepository
 import com.sabgil.contena.response.shop.GetShopListResponse
