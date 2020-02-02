@@ -1,5 +1,6 @@
 package com.sabgil.contena.controller
 
+import com.sabgil.contena.entitiy.ShopEntity
 import com.sabgil.contena.repository.ShopRepository
 import com.sabgil.contena.repository.SubscriptionRepository
 import com.sabgil.contena.response.shop.GetShopListResponse
@@ -13,14 +14,21 @@ class ShopController(
         private val subscriptionRepository: SubscriptionRepository
 ) {
 
-    @GetMapping("/shop_list")
+    @GetMapping("/shop_list/available")
     fun getAvailableShopList(
             @RequestParam(value = "search_keyword", defaultValue = "") searchKeyword: String
-    ) {
-        TODO()
+    ): GetShopListResponse {
+
+        val shopEntities = if (searchKeyword.isNotEmpty()) {
+            shopRepository.findByShopNameContaining(searchKeyword)
+        } else {
+            emptyList()
+        }
+
+        return GetShopListResponse.from(shopEntities)
     }
 
-    @GetMapping("/shop_list")
+    @GetMapping("/shop_list/subscription")
     fun getSubscriptionShopList(
             @RequestParam(value = "user_id", defaultValue = "") userId: String
     ): GetShopListResponse {

@@ -5,4 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface ShopRepository : JpaRepository<ShopEntity, String>
+interface ShopRepository : JpaRepository<ShopEntity, String> {
+
+    fun findByShopNameContaining(shopNameKeyword: String): List<ShopEntity>
+}
