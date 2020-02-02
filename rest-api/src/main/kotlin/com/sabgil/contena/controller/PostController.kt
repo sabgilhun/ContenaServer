@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class PostController(
-        private val itemRepository: ItemRepository,
         private val postRepository: PostRepository,
-        private val shopRepository: ShopRepository,
         private val subscriptionRepository: SubscriptionRepository
 ) {
 
