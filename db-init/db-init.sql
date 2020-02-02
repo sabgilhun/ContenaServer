@@ -31,7 +31,7 @@ CREATE TABLE item
     FOREIGN KEY (shop_name) REFERENCES shop (shop_name)
 );
 
-CREATE TABLE subsription
+CREATE TABLE subscription
 (
     id INT (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR (100) NOT NULL,
