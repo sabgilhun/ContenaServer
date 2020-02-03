@@ -6,7 +6,7 @@ shop_name = 'bluesman'
 
 def scrap_new_arrival_item():
     # bluesman 신상품 화면 url
-    target_url = 'http://bluesman.co.kr/product/list.html?cate_no=24/'
+    target_url = base_url + '/product/list.html?cate_no=24/'
 
     # chrome headers
     headers = {'User-Agent': 'Mozilla/5.0'}
