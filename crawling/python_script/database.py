@@ -27,11 +27,11 @@ post_select_sql = """
 
 
 def connect_contena_db():
-    # return pymysql.connect(host='db', user='root', password='1234', db='contena', charset='utf8',
-    #                        cursorclass=pymysql.cursors.DictCursor)
-
-    return pymysql.connect(host='127.0.0.1', port=3306, user='root', password='1234', db='contena', charset='utf8',
+    return pymysql.connect(host='db', user='root', password='1234', db='contena', charset='utf8',
                            cursorclass=pymysql.cursors.DictCursor)
+
+    # return pymysql.connect(host='127.0.0.1', port=3306, user='root', password='1234', db='contena', charset='utf8',
+    #                        cursorclass=pymysql.cursors.DictCursor)
 
 
 def insert_shop(cursor, shop):

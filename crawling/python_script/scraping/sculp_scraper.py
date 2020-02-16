@@ -46,7 +46,7 @@ def __generate_dict_item(item):
     item_dict['product_name'] = item.find('h3', {'class': 'product-name'}).find('a').text
     item_dict['brand'] = item.find('div', {'class': 'product-brands'}).find('a').text
     item_dict['image_url'] = item.find('img', {'class': 'hide-image'})['src']
-    item_dict['page_url'] = base_url + item.find('a', {'class': 'woocommerce-LoopProduct-link'})['href']
-    item_dict['price'] = item.find('span', {'class': 'woocommerce-Price-amount amount'}).text.replace('₩','')
+    item_dict['page_url'] = item.find('a', {'class': 'woocommerce-LoopProduct-link'})['href']
+    item_dict['price'] = item.find('span', {'class': 'woocommerce-Price-amount amount'}).text.replace('₩', '')
 
     return item_dict
