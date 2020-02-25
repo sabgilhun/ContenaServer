@@ -2,6 +2,9 @@ FROM ubuntu:latest
 
 RUN apt-get update
 
+RUN apt-get install tzdata \ 
+  && ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+
 # Install cron
 RUN apt-get -y install cron
 
