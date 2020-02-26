@@ -1,3 +1,3 @@
-* 2 * * * echo "Start Cron Job" >> /var/log/cron.log 2>&1
-* 2 * * * python3 ../python_script/main.py >> /var/log/cron.log 2>&1
+0 2 * * * echo "Start Cron Job" >> /var/log/cron.log 2>&1
+0 2 * * * python3 ../python_script/main.py >> /var/log/cron.log 2>&1
 # An empty line is required at the end of this file for a valid cron file
