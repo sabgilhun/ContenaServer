@@ -2,6 +2,9 @@ CREATE DATABASE contena;
 
 USE contena;
 
+SET GLOBAL time_zone='Asia/Seoul';
+SET time_zone='Asia/Seoul';
+
 CREATE TABLE shop
 (
     shop_name VARCHAR (100) NOT NULL PRIMARY KEY,
