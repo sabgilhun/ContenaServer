@@ -1,6 +1,8 @@
 package com.sabgil.contena.controller
 
 import com.sabgil.contena.entitiy.PostEntity
+import com.sabgil.contena.exceptiom.BadRequestException
+import com.sabgil.contena.exceptiom.NotFoundException
 import com.sabgil.contena.repository.PostRepository
 import com.sabgil.contena.repository.SubscriptionRepository
 import com.sabgil.contena.response.post.GetPostListResponse
@@ -20,7 +22,7 @@ class PostController(
             @RequestParam(value = "cursor", defaultValue = "-1") cursor: Long
     ): GetPostListResponse {
         if (userId.isEmpty()) {
-            throw Exception()
+            throw BadRequestException("유저 정보가 잘못 되었습니다.")
         }
 
         val postEntities = subscriptionRepository.findByUserId(userId).fold(mutableListOf<PostEntity>())

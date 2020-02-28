@@ -14,8 +14,8 @@ class ShopEntity(
         @Column(name = "subscriber_count")
         var subscriberCount: Long = 0,
 
-        @OneToOne(mappedBy = "shopEntity")
-        var postEntity: PostEntity? = null,
+        @OneToMany(mappedBy = "shopEntity")
+        var postEntity: List<PostEntity>? = null,
 
         @OneToMany(mappedBy = "shopEntity")
         var subscriptionEntities: List<SubscriptionEntity>? = null

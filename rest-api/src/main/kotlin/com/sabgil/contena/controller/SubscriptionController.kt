@@ -1,6 +1,7 @@
 package com.sabgil.contena.controller
 
 import com.sabgil.contena.entitiy.SubscriptionEntity
+import com.sabgil.contena.exceptiom.NotFoundException
 import com.sabgil.contena.repository.ShopRepository
 import com.sabgil.contena.repository.SubscriptionRepository
 import com.sabgil.contena.request.subscription.SubscriptionRequest
@@ -33,7 +34,7 @@ class SubscriptionController(
         val shopEntity = shopRepository.findById(shopName)
 
         if (shopEntity.isEmpty) {
-            throw Exception()
+            throw NotFoundException("해당 쇼핑몰은 쇼핑몰 리스트에 존재하지 않습니다.")
         }
 
         val subscriptionEntity = subscriptionRepository.findByUserIdAndShopEntity(userId, shopEntity.get())
@@ -42,7 +43,7 @@ class SubscriptionController(
             subscriptionRepository.save(SubscriptionEntity(userId = userId, shopEntity = shopEntity.get()))
             shopRepository.updateIncreaseSubscriberCount(shopName)
         } else {
-            throw Exception()
+            throw NotFoundException("이미 구독한 쇼핑몰 입니다.")
         }
     }
 
@@ -51,7 +52,7 @@ class SubscriptionController(
         val shopEntity = shopRepository.findById(shopName)
 
         if (shopEntity.isEmpty) {
-            throw Exception()
+            throw NotFoundException("해당 쇼핑몰은 쇼핑몰 리스트에 존재하지 않습니다.")
         }
 
         val subscriptionEntity = subscriptionRepository.findByUserIdAndShopEntity(userId, shopEntity.get())
@@ -60,7 +61,7 @@ class SubscriptionController(
             subscriptionRepository.delete(subscriptionEntity.first())
             shopRepository.updateDecreaseSubscriberCount(shopName)
         } else {
-            throw Exception()
+            throw NotFoundException("이미 구독 취소한 쇼핑몰 입니다.")
         }
     }
 }

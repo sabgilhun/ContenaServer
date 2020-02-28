@@ -2,7 +2,9 @@ package com.sabgil.contena.response.newitem
 
 import com.sabgil.contena.entitiy.ItemEntity
 import com.sabgil.contena.entitiy.PostEntity
-import java.lang.Exception
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.ResponseStatus
+import java.lang.RuntimeException
 
 data class GetNewItemListResponse(
         val newItemList: List<NewItem>
@@ -20,7 +22,7 @@ data class GetNewItemListResponse(
             val itemEntities = postEntity.itemEntities
 
             if (itemEntities.isNullOrEmpty()) {
-                throw Exception()
+                throw EmptyPostException()
             } else {
                 return GetNewItemListResponse(newItemList = itemEntities.map { it.mapToNewItem() })
             }
@@ -34,4 +36,7 @@ data class GetNewItemListResponse(
                 price = price
         )
     }
+
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    class EmptyPostException : RuntimeException("포스트에 상품이 존재 하지 안습니다.")
 }
