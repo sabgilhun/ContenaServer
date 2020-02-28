@@ -21,9 +21,9 @@ class NewItemController(
 
     @GetMapping("/new_item")
     fun getNewItemList(
-            @RequestParam(value = "post_id", defaultValue = "-1") postId: Long
+            @RequestParam(value = "post_id", defaultValue = "0") postId: Long
     ): GetNewItemListResponse {
-        if (postId < 0) {
+        if (postId < 1) {
             throw BadRequestException("잘못된 포스트 번호($postId) 입니다.")
         }
 

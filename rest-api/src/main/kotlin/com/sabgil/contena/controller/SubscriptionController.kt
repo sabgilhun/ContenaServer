@@ -31,16 +31,13 @@ class SubscriptionController(
 
     @Transactional
     fun checkSubscriptionAndPost(userId: String, shopName: String) {
-        val shopEntity = shopRepository.findById(shopName)
+        val shopEntity = shopRepository.findByShopName(shopName)
+                ?: throw NotFoundException("해당 쇼핑몰은 쇼핑몰 리스트에 존재하지 않습니다.")
 
-        if (shopEntity.isEmpty) {
-            throw NotFoundException("해당 쇼핑몰은 쇼핑몰 리스트에 존재하지 않습니다.")
-        }
-
-        val subscriptionEntity = subscriptionRepository.findByUserIdAndShopEntity(userId, shopEntity.get())
+        val subscriptionEntity = subscriptionRepository.findByUserIdAndShopEntity(userId, shopEntity)
 
         if (subscriptionEntity.isEmpty()) {
-            subscriptionRepository.save(SubscriptionEntity(userId = userId, shopEntity = shopEntity.get()))
+            subscriptionRepository.save(SubscriptionEntity(userId = userId, shopEntity = shopEntity))
             shopRepository.updateIncreaseSubscriberCount(shopName)
         } else {
             throw NotFoundException("이미 구독한 쇼핑몰 입니다.")
@@ -49,13 +46,10 @@ class SubscriptionController(
 
     @Transactional
     fun checkSubscriptionAndDelete(userId: String, shopName: String) {
-        val shopEntity = shopRepository.findById(shopName)
+        val shopEntity = shopRepository.findByShopName(shopName)
+                ?: throw NotFoundException("해당 쇼핑몰은 쇼핑몰 리스트에 존재하지 않습니다.")
 
-        if (shopEntity.isEmpty) {
-            throw NotFoundException("해당 쇼핑몰은 쇼핑몰 리스트에 존재하지 않습니다.")
-        }
-
-        val subscriptionEntity = subscriptionRepository.findByUserIdAndShopEntity(userId, shopEntity.get())
+        val subscriptionEntity = subscriptionRepository.findByUserIdAndShopEntity(userId, shopEntity)
 
         if (subscriptionEntity.isNotEmpty()) {
             subscriptionRepository.delete(subscriptionEntity.first())
