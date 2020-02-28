@@ -8,7 +8,7 @@ class PostEntity(
         @GeneratedValue(strategy = GenerationType.AUTO)
         var id: Long = 0,
 
-        @OneToOne
+        @ManyToOne
         @JoinColumn(name = "shop_name")
         var shopEntity: ShopEntity? = null,
 

@@ -11,7 +11,7 @@ class SubscriptionEntity(
         @Column(name = "user_id")
         var userId: String = "",
 
-        @OneToOne
+        @ManyToOne
         @JoinColumn(name = "shop_name")
         var shopEntity: ShopEntity? = null
 )
