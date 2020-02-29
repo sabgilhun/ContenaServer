@@ -1,8 +1,6 @@
 package com.sabgil.contena.controller
 
-import com.sabgil.contena.entitiy.PostEntity
 import com.sabgil.contena.exceptiom.BadRequestException
-import com.sabgil.contena.exceptiom.NotFoundException
 import com.sabgil.contena.repository.PostRepository
 import com.sabgil.contena.repository.SubscriptionRepository
 import com.sabgil.contena.response.post.GetPostListResponse
@@ -25,14 +23,18 @@ class PostController(
             throw BadRequestException("유저 정보가 잘못 되었습니다.")
         }
 
-        val postEntities = subscriptionRepository.findByUserId(userId).fold(mutableListOf<PostEntity>())
-        { postEntities, subscriptionEntity ->
-            postEntities.apply {
-                addAll(subscriptionEntity.shopEntity?.let
-                {
-                    postRepository.findByShopEntityOrderByIdDesc(it)
-                } ?: emptyList())
+        val shopEntities = subscriptionRepository.findByUserId(userId).mapNotNull {
+            it.shopEntity
+        }
+
+        val postEntities = if (shopEntities.isNotEmpty()) {
+            if (cursor == -1L) {
+                postRepository.findTop20ByShopEntityInOrderByIdDesc(shopEntities)
+            } else {
+                postRepository.findTop20ByIdBeforeAndShopEntityInOrderByIdDesc(cursor, shopEntities)
             }
+        } else {
+            emptyList()
         }
 
         return GetPostListResponse.from(postEntities)

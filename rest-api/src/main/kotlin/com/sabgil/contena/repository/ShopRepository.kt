@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional
 @Repository
 interface ShopRepository : JpaRepository<ShopEntity, String> {
 
+    fun findByShopName(shopName: String): ShopEntity?
+
     fun findByShopNameContaining(shopNameKeyword: String): List<ShopEntity>
 
     @Transactional

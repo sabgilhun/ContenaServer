@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface PostRepository : JpaRepository<PostEntity, Long> {
 
-    fun findByShopEntityOrderByIdDesc(shopEntity: ShopEntity): List<PostEntity>
+    fun findTop20ByShopEntityInOrderByIdDesc(shopEntities: List<ShopEntity>): List<PostEntity>
+
+    fun findTop20ByIdBeforeAndShopEntityInOrderByIdDesc(id: Long, shopEntities: List<ShopEntity>): List<PostEntity>
 }
