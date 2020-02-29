@@ -37,7 +37,7 @@ CREATE TABLE item
 CREATE TABLE subscription
 (
     id INT (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    user_id VARCHAR (100) NOT NULL,
+    user_id VARCHAR (255) NOT NULL,
     shop_name VARCHAR (100) NOT NULL,
     FOREIGN KEY (shop_name) REFERENCES shop (shop_name)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
