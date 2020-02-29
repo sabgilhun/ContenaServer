@@ -6,6 +6,11 @@ import com.sabgil.contena.request.notification.NotiNewItemRequest
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.BatchResponse
+import com.google.firebase.messaging.MulticastMessage
+import com.google.firebase.messaging.Notification
+
 
 @RestController
 class NotificationController(
@@ -21,14 +26,21 @@ class NotificationController(
         }
 
         val hasToPushMessageUserList =
-                notiNewItemRequest.shopList.fold(mutableListOf<String>()) { userTokenList, shopName ->
+                notiNewItemRequest.shopList.fold(mutableSetOf<String>()) { userTokenSet, shopName ->
                     val shopEntity = shopRepository.findByShopName(shopName)
 
                     if (shopEntity != null) {
-                        userTokenList.addAll(shopEntity.subscriptionEntities.map { it.userId })
+                        userTokenSet.addAll(shopEntity.subscriptionEntities.map { it.userId })
                     }
+                    
+                    return@fold userTokenSet
+                }.toList()
 
-                    return@fold userTokenList
-                }
+        val message = MulticastMessage.builder()
+                .setNotification(Notification("구독하신 쇼핑몰에 신상품이 들어왔어요.", "지금 바로 확인하세요."))
+                .addAllTokens(hasToPushMessageUserList)
+                .build()
+
+        FirebaseMessaging.getInstance().sendMulticast(message)
     }
 }
