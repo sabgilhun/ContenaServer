@@ -16,5 +16,5 @@ class PostEntity(
         var uploadDate: String = "",
 
         @OneToMany(mappedBy = "postEntity")
-        var itemEntities: List<ItemEntity>? = null
+        var itemEntities: List<ItemEntity> = emptyList()
 )

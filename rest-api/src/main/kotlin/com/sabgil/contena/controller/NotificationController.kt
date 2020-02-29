@@ -16,17 +16,16 @@ class NotificationController(
     fun postNotificationNewItem(
             @RequestBody notiNewItemRequest: NotiNewItemRequest
     ) {
-        if (notiNewItemRequest.shopList == null) {
+        if (notiNewItemRequest.shopList.isEmpty()) {
             throw BadRequestException("갱신된 쇼핑몰 리스트가 비어 있습니다.")
         }
 
         val hasToPushMessageUserList =
-                notiNewItemRequest.shopList!!.fold(mutableListOf<String>()) { userTokenList, shopName ->
+                notiNewItemRequest.shopList.fold(mutableListOf<String>()) { userTokenList, shopName ->
                     val shopEntity = shopRepository.findByShopName(shopName)
 
                     if (shopEntity != null) {
-                        userTokenList.addAll(shopEntity.subscriptionEntities?.map { it.userId }?.toList()
-                                ?: emptyList())
+                        userTokenList.addAll(shopEntity.subscriptionEntities.map { it.userId })
                     }
 
                     return@fold userTokenList

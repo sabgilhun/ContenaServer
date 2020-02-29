@@ -18,5 +18,5 @@ class ShopEntity(
         var postEntity: List<PostEntity>? = null,
 
         @OneToMany(mappedBy = "shopEntity")
-        var subscriptionEntities: List<SubscriptionEntity>? = null
+        var subscriptionEntities: List<SubscriptionEntity> = emptyList()
 )
