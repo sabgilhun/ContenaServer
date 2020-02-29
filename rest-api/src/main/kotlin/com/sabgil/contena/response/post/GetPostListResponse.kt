@@ -39,10 +39,10 @@ data class GetPostListResponse(
                 uploadDate = uploadDate,
                 shopName = shopEntity?.shopName ?: "",
                 shopLogoUrl = shopEntity?.shopLogoUrl ?: "",
-                newItemList = itemEntities?.run {
+                newItemList = itemEntities.run {
                     if (size > 5) return@run subList(0, 5)
                     else return@run this
-                }?.map { a -> a.mapToNewItem() } ?: emptyList()
+                }.map { itemEntity -> itemEntity.mapToNewItem() }
         )
 
         private fun ItemEntity.mapToNewItem() = NewItem(
