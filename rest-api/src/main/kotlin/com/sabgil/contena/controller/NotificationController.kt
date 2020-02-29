@@ -37,7 +37,6 @@ class NotificationController(
                 }.toList()
 
         val message = MulticastMessage.builder()
-                .setNotification(Notification("구독하신 쇼핑몰에 신상품이 들어왔어요.", "지금 바로 확인하세요."))
                 .addAllTokens(hasToPushMessageUserList)
                 .build()
 
