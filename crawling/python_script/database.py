@@ -1,5 +1,4 @@
 import pymysql
-from _datetime import datetime
 
 shop_insert_sql = """
         INSERT INTO shop(shop_name, shop_logo_url) 
