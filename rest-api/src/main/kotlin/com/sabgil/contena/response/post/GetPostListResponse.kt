@@ -1,25 +1,26 @@
 package com.sabgil.contena.response.post
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.sabgil.contena.entitiy.ItemEntity
 import com.sabgil.contena.entitiy.PostEntity
 
 data class GetPostListResponse(
-        val lastCursor: Long,
-        val postList: List<Post>
+        @JsonProperty("last_cursor") val lastCursor: Long,
+        @JsonProperty("post_list") val postList: List<Post>
 ) {
     data class Post(
-            val postId: Long,
-            val uploadDate: String,
-            val shopName: String,
-            val shopLogoUrl: String,
-            val newItemList: List<NewItem>
+            @JsonProperty("post_id") val postId: Long,
+            @JsonProperty("upload_data") val uploadDate: String,
+            @JsonProperty("shop_name") val shopName: String,
+            @JsonProperty("shop_logo_url") val shopLogoUrl: String,
+            @JsonProperty("new_item_list") val newItemList: List<NewItem>
     )
 
     data class NewItem(
-            val productName: String,
-            val brand: String,
-            val imageUrl: String,
-            val price: String
+            @JsonProperty("product_name") val productName: String,
+            @JsonProperty("brand") val brand: String,
+            @JsonProperty("image_url") val imageUrl: String,
+            @JsonProperty("price") val price: String
     )
 
     companion object {

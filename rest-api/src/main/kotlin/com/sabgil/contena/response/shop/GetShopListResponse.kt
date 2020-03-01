@@ -1,14 +1,15 @@
 package com.sabgil.contena.response.shop
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.sabgil.contena.entitiy.ShopEntity
 
 data class GetShopListResponse(
-        val availableShopList: List<AvailableShop>
+        @JsonProperty("available_shop_list") val availableShopList: List<AvailableShop>
 ) {
     data class AvailableShop(
-            val shopName: String,
-            val shopLogUrl: String,
-            val subscriberCount: Long
+            @JsonProperty("shop_name") val shopName: String,
+            @JsonProperty("shop_logo_url") val shopLogoUrl: String,
+            @JsonProperty("subscriber_count") val subscriberCount: Long
     )
 
     companion object {
@@ -18,7 +19,7 @@ data class GetShopListResponse(
 
         private fun ShopEntity.mapToAvailableShop() = AvailableShop(
                 shopName = shopName,
-                shopLogUrl = shopLogoUrl,
+                shopLogoUrl = shopLogoUrl,
                 subscriberCount = subscriberCount
         )
     }
