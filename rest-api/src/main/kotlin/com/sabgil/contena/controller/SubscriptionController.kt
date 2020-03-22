@@ -22,8 +22,8 @@ class SubscriptionController(
         checkSubscriptionAndPost(subscriptionRequest.userId, subscriptionRequest.shopName)
     }
 
-    @DeleteMapping("/subscription")
-    fun deleteShopSubscription(
+    @PostMapping("/unsubscription")
+    fun postShopUnsubscription(
             @RequestBody subscriptionRequest: SubscriptionRequest
     ) {
         checkSubscriptionAndDelete(subscriptionRequest.userId, subscriptionRequest.shopName)
