@@ -11,9 +11,6 @@ class ShopEntity(
         @Column(name = "shop_logo_url")
         var shopLogoUrl: String = "",
 
-        @Column(name = "subscriber_count")
-        var subscriberCount: Long = 0,
-
         @OneToMany(mappedBy = "shopEntity")
         var postEntity: List<PostEntity>? = null,
 

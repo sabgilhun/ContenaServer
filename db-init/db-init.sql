@@ -8,8 +8,7 @@ SET time_zone='Asia/Seoul';
 CREATE TABLE shop
 (
     shop_name VARCHAR (100) NOT NULL PRIMARY KEY,
-    shop_logo_url VARCHAR (255) NOT NULL,
-    subscriber_count INT (11) NOT NULL DEFAULT 0
+    shop_logo_url VARCHAR (255) NOT NULL
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE post
