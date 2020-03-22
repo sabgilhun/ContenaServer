@@ -10,6 +10,6 @@ interface SubscriptionRepository : JpaRepository<SubscriptionEntity, Long> {
 
     fun findByUserId(userId: String): List<SubscriptionEntity>
 
-    fun findByUserIdAndShopEntity(userId: String, shopEntity: ShopEntity): List<SubscriptionEntity>
+    fun findByUserIdAndShopEntity(userId: String, shopEntity: ShopEntity): SubscriptionEntity?
 
 }

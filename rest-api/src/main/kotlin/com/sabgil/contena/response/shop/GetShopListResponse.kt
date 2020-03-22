@@ -20,7 +20,7 @@ data class GetShopListResponse(
         private fun ShopEntity.mapToAvailableShop() = AvailableShop(
                 shopName = shopName,
                 shopLogoUrl = shopLogoUrl,
-                subscriberCount = subscriberCount
+                subscriberCount = subscriptionEntities.size.toLong()
         )
     }
 }
