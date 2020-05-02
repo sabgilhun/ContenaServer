@@ -1,15 +1,14 @@
 package com.sabgil.contena.controller
 
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.MulticastMessage
+import com.google.firebase.messaging.Notification
 import com.sabgil.contena.exceptiom.BadRequestException
 import com.sabgil.contena.repository.ShopRepository
 import com.sabgil.contena.request.notification.NotiNewItemRequest
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.BatchResponse
-import com.google.firebase.messaging.MulticastMessage
-import com.google.firebase.messaging.Notification
 
 
 @RestController
@@ -32,11 +31,12 @@ class NotificationController(
                     if (shopEntity != null) {
                         userTokenSet.addAll(shopEntity.subscriptionEntities.map { it.userId })
                     }
-                    
+
                     return@fold userTokenSet
                 }.toList()
 
         val message = MulticastMessage.builder()
+                .setNotification(Notification(notiNewItemRequest.notiTitle, notiNewItemRequest.notiBody))
                 .addAllTokens(hasToPushMessageUserList)
                 .build()
 

@@ -20,6 +20,7 @@ data class GetPostListResponse(
             @JsonProperty("product_name") val productName: String,
             @JsonProperty("brand") val brand: String,
             @JsonProperty("image_url") val imageUrl: String,
+            @JsonProperty("page_url") val pageUrl: String,
             @JsonProperty("price") val price: String
     )
 
@@ -40,16 +41,14 @@ data class GetPostListResponse(
                 uploadDate = uploadDate,
                 shopName = shopEntity?.shopName ?: "",
                 shopLogoUrl = shopEntity?.shopLogoUrl ?: "",
-                newItemList = itemEntities.run {
-                    if (size > 5) return@run subList(0, 5)
-                    else return@run this
-                }.map { itemEntity -> itemEntity.mapToNewItem() }
+                newItemList = itemEntities.map { itemEntity -> itemEntity.mapToNewItem() }
         )
 
         private fun ItemEntity.mapToNewItem() = NewItem(
                 productName = productName,
                 brand = brand,
                 imageUrl = imageUrl,
+                pageUrl = pageUrl,
                 price = price
         )
     }

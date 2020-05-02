@@ -1,5 +1,8 @@
 package com.sabgil.contena.controller
 
+import com.sabgil.contena.entitiy.RecommendEntity
+import com.sabgil.contena.entitiy.ShopEntity
+import com.sabgil.contena.repository.RecommendRepository
 import com.sabgil.contena.repository.ShopRepository
 import com.sabgil.contena.repository.SubscriptionRepository
 import com.sabgil.contena.response.shop.GetShopListResponse
@@ -10,8 +13,19 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class ShopController(
         private val shopRepository: ShopRepository,
+        private val recommendRepository: RecommendRepository,
         private val subscriptionRepository: SubscriptionRepository
 ) {
+
+    @GetMapping("/shop_list/recommend")
+    fun getRecommendShopList(): GetShopListResponse {
+
+        val shopEntities = mutableListOf<ShopEntity>()
+
+        recommendRepository.findAll().mapNotNullTo(shopEntities, RecommendEntity::shopEntity)
+
+        return GetShopListResponse.from(shopEntities)
+    }
 
     @GetMapping("/shop_list/available")
     fun getAvailableShopList(

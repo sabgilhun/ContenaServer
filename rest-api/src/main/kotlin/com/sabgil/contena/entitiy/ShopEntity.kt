@@ -1,6 +1,9 @@
 package com.sabgil.contena.entitiy
 
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.OneToMany
 
 @Entity(name = "shop")
 class ShopEntity(
@@ -10,6 +13,9 @@ class ShopEntity(
 
         @Column(name = "shop_logo_url")
         var shopLogoUrl: String = "",
+
+        @Column(name = "shop_desc")
+        var shopDescription: String = "",
 
         @OneToMany(mappedBy = "shopEntity")
         var postEntity: List<PostEntity>? = null,
