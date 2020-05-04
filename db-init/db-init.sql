@@ -44,6 +44,7 @@ CREATE TABLE subscription
 
 CREATE TABLE recommend
 (
+	id INT (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	shop_name VARCHAR (100) NOT NULL,
     FOREIGN KEY (shop_name) REFERENCES shop (shop_name)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
