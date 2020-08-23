@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk-alpine
 
-COPY /auth/firebase_key.json firebase_key.json
+COPY ../../auth/firebase_key.json firebase_key.json
 
 ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} app.jar
