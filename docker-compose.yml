@@ -1,7 +1,9 @@
 version: "3.7"
 
 networks:
-  db-network:
+  default:
+    external:
+      name: global_network
 
 services:
   db:
@@ -13,8 +15,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "1234"
       TZ: Asia/Seoul
-    networks:
-      - db-network
     ports:
      - '3306:3306'
     container_name: db
@@ -22,8 +22,6 @@ services:
   crawling:
     build:
       context: ./crawling
-    networks:
-      - db-network
     container_name: crawling
 
   rest-api:
@@ -32,7 +30,5 @@ services:
     networks:
       - db-network
     ports:
-      - "80:8080"
+      - "8081:8081"
     container_name: rest-api
-    depends_on: 
-      - db
