@@ -4,12 +4,15 @@ networks:
   default:
     external:
       name: global_network
-
+      
+volumes:
+    db_volume:
+    
 services:
   db:
     image: mysql:5.6
     volumes:
-      - ~/data:/var/lib/mysql
+      - db_volume:/var/lib/mysql
       - ./db-init:/docker-entrypoint-initdb.d
     restart: always
     environment:
