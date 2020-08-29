@@ -14,7 +14,7 @@ class NewItemController(
 ) {
 
     @GetMapping("/")
-    fun getNewItemList2(): GetNewItemListResponse {
+    fun getNewItemList2(): String {
         return "hello"
     }
 
