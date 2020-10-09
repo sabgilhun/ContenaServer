@@ -9,8 +9,10 @@ services:
     volumes:
       - ./auth:/etc/nginx/conf.d
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    network:
+      - global_network
 
 networks:
-  default:
+  global_network:
     external:
       name: global_network

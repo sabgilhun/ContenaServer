@@ -25,6 +25,6 @@ services:
       - global_network
 
 networks:
-  default:
+  global_network:
     external:
       name: global_network
