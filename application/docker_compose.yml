@@ -23,6 +23,14 @@ services:
     networks:
       - global_network
 
+  rest-api:
+    container_name: rest-api
+    image: registry.ccontena.com/rest-api
+    ports:
+      - "8081:8081"
+    networks:
+      - global_network
+      
 networks:
   global_network:
     external:
