@@ -18,8 +18,7 @@ services:
 
   crawling:
     container_name: crawling
-    build:
-      context: ./crawling
+    image: registry.ccontena.com/crawling
     networks:
       - global_network
 
