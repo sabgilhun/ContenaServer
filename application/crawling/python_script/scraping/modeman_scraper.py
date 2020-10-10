@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import database
 from scraping.scrap_helper import *
+from global_constants import *
 
 
 class ModeManScrapper:
@@ -34,7 +35,7 @@ class ModeManScrapper:
             page_no += 1
             keys_of_new = list(map(lambda i: i['page_url'], items))
             index = search_first_index(keys_of_old, keys_of_new)
-            if (index and index >= 0) or len(self.scrapped_items) > LIMIT_NUMBER_OF_ITEM_IN_POST:
+            if (index and index >= 0) or len(self.scrapped_items) > LIMIT_NUMBER_OF_SCRAPPED_ITEM:
                 break
 
         shop = {'shop_name': self.shop_name, 'shop_logo_url': self.shop_logo, 'shop_desc': self.shop_desc}
