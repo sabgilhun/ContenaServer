@@ -25,11 +25,18 @@ class ReportController(
             reportRepository.save(
                     ReportEntity(
                             reportKey = reportKey,
-                            contents = reportRequest.contents
+                            contents = applyContentsLengthRestrictions(reportRequest.contents)
                     )
             )
         }
 
         return ReportResponse.from(reportRequest, isNotReported)
     }
+
+    private fun applyContentsLengthRestrictions(contents: String) =
+            if (contents.length > 150) {
+                contents.substring(0 until 150)
+            } else {
+                contents
+            }
 }
