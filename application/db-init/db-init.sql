@@ -28,6 +28,7 @@ CREATE TABLE item
     image_url VARCHAR (255) NOT NULL,
     page_url VARCHAR (255) NOT NULL,
     price VARCHAR (100) NOT NULL,
+    origin_price VARCHAR (100),
     post_id INT (11) NOT NULL,
     shop_name VARCHAR (100) NOT NULL,
     FOREIGN KEY (post_id) REFERENCES post (id),

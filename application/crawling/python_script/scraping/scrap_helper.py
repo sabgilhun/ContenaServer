@@ -12,3 +12,11 @@ def search_first_index(keys_of_old, keys_of_new):
                 return keys_of_new.index(new)
 
     return None
+
+
+def remove_krw(price):
+    return price.replace("KRW", "").strip()
+
+
+def remove_won_symbol(price):
+    return price.replace("w", "").strip()

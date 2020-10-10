@@ -34,7 +34,7 @@ class ModeManScrapper:
             page_no += 1
             keys_of_new = list(map(lambda i: i['page_url'], items))
             index = search_first_index(keys_of_old, keys_of_new)
-            if index >= 0 or len(self.scrapped_items) > LIMIT_NUMBER_OF_ITEM_IN_POST:
+            if (index and index >= 0) or len(self.scrapped_items) > LIMIT_NUMBER_OF_ITEM_IN_POST:
                 break
 
         shop = {'shop_name': self.shop_name, 'shop_logo_url': self.shop_logo, 'shop_desc': self.shop_desc}
@@ -55,13 +55,24 @@ class ModeManScrapper:
 
     def generate_dict_item(self, item):
         item_dict = dict()
+
         item_dict['shop_name'] = self.shop_name
+
         item_dict['product_name'] = item.find('p', {'class': 'name'}).find('span').text
+
         data_list = item.findAll('li', {'class': 'xans-record-'})
         item_dict['brand'] = data_list[0].find('a').text
-        item_dict['image_url'] = item.find('img', {'class': 'lazy thumb-front'})['data-original'].replace("//",
-                                                                                                          "http://")
+
+        item_dict['image_url'] = \
+            item.find('img', {'class': 'lazy thumb-front'})['data-original'].replace("//", "http://")
+
         item_dict['page_url'] = self.base_url + item.find('div', {'class': 'box'}).find('a')['href']
-        item_dict['price'] = data_list[1].findAll('span')[1].text.replace("w", "")
+
+        item_dict['origin_price'] = None
+        if len(data_list) == 3:
+            item_dict['origin_price'] = remove_won_symbol(data_list[1].findAll('span')[1].text)
+            item_dict['price'] = remove_won_symbol(data_list[2].findAll('span')[1].text)
+        else:
+            item_dict['price'] = remove_won_symbol(data_list[1].findAll('span')[1].text)
 
         return item_dict

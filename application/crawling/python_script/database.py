@@ -7,8 +7,8 @@ shop_insert_sql = """
         """
 
 item_insert_sql = """
-        INSERT INTO item(product_name, brand, image_url, page_url, price, shop_name, post_id)
-                 VALUES (%s, %s, %s, %s, %s, %s, %s)
+        INSERT INTO item(product_name, brand, image_url, page_url, price, origin_price, shop_name, post_id)
+                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
 
 post_insert_sql = """
@@ -38,13 +38,14 @@ def select_item_with_shop_name(shop_name):
 
     try:
         with connection.cursor() as cursor:
-
             cursor.execute(post_select_sql, (shop_name,))
             post = cursor.fetchone()
-            post_id = post['id']
-
-            cursor.execute(item_select_sql, (post_id,))
-            items = cursor.fetchall()
+            if post:
+                post_id = post['id']
+                cursor.execute(item_select_sql, (post_id,))
+                items = cursor.fetchall()
+            else:
+                items = list()
     finally:
         connection.close()
 
@@ -82,8 +83,10 @@ def insert_shop_post_item_entity(shop_data, scrapped_item):
 
             # insert items
             for item in scrapped_item:
-                cursor.execute(item_insert_sql, (item['product_name'], item['brand'], item['image_url'],
-                                                 item['page_url'], item['price'], item['shop_name'], post_id))
+                cursor.execute(item_insert_sql, (item['product_name'], item['brand'],
+                                                 item['image_url'], item['page_url'],
+                                                 item['price'], item['origin_price'],
+                                                 item['shop_name'], post_id))
             connection.commit()
     finally:
         connection.close()

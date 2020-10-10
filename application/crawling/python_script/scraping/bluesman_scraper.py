@@ -34,7 +34,7 @@ class BluesmansScraper:
             page_no += 1
             keys_of_new = list(map(lambda i: i['page_url'], items))
             index = search_first_index(keys_of_old, keys_of_new)
-            if index >= 0 or len(self.scrapped_items) > LIMIT_NUMBER_OF_ITEM_IN_POST:
+            if (index and index >= 0) or len(self.scrapped_items) > LIMIT_NUMBER_OF_ITEM_IN_POST:
                 break
 
         shop = {'shop_name': self.shop_name, 'shop_logo_url': self.shop_logo, 'shop_desc': self.shop_desc}
@@ -55,11 +55,24 @@ class BluesmansScraper:
 
     def generate_dict_item(self, item):
         item_dict = dict()
+
         item_dict['shop_name'] = self.shop_name
+
         item_dict['product_name'] = item.find('div', {'class': 'product_title'}).find('span').text
+
         item_dict['brand'] = item.find('span', {'class': 'product_brand'}).text
+
         item_dict['image_url'] = item.find('img', {'class': 'thumb_image'})['src'].replace("//", "http://")
+
         item_dict['page_url'] = self.base_url + item.find('div', {'class': 'product_title'}).find('a')['href']
-        item_dict['price'] = item.find('strong', {'class': 'price'}).text.replace("KRW ", "")
+
+        item_dict['price'] = remove_krw(item.find('strong', {'class': 'price'}).text)
+
+        item_dict['origin_price'] = None
+        origin_price = item.find('strong', {'class': 'custom_price'})
+        if origin_price:
+            trimmed_str = remove_krw(origin_price.text)
+            if trimmed_str != '0':
+                item_dict['origin_price'] = trimmed_str
 
         return item_dict
