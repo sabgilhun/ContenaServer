@@ -49,3 +49,11 @@ CREATE TABLE recommend
 	shop_name VARCHAR (100) NOT NULL,
     FOREIGN KEY (shop_name) REFERENCES shop (shop_name)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+CREATE TABLE report
+(
+	user_id VARCHAR (255) NOT NULL,
+    post_id INT (11) NOT NULL,
+	contents VARCHAR (255) NOT NULL,
+    constraint pk_composite primary key(user_id, post_id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
