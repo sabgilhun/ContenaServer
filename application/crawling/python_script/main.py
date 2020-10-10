@@ -16,5 +16,5 @@ if __name__ == '__main__':
             database.insert_shop_post_item_entity(shop, scrapped_items)
             shop_list.append(shop['shop_name'])
 
-    if shop_list:
-        trigger_notification_server(shop_list)
+    # if shop_list:
+    #     trigger_notification_server(shop_list)
