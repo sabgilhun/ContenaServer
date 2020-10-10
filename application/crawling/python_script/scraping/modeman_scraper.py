@@ -19,7 +19,7 @@ class ModeManScrapper:
         keys_of_old = \
             list(map(
                 lambda i: i['page_url'],
-                database.select_item_with_shop_name(self.shop_name, LIMIT_NUMBER_OF_OLD_ITEM)
+                database.select_item_with_shop_name(self.shop_name)
             ))
 
         # logo scrap
@@ -34,7 +34,7 @@ class ModeManScrapper:
             page_no += 1
             keys_of_new = list(map(lambda i: i['page_url'], items))
             index = search_first_index(keys_of_old, keys_of_new)
-            if index or len(self.scrapped_items) > LIMIT_NUMBER_OF_ITEM_IN_POST:
+            if index >= 0 or len(self.scrapped_items) > LIMIT_NUMBER_OF_ITEM_IN_POST:
                 break
 
         shop = {'shop_name': self.shop_name, 'shop_logo_url': self.shop_logo, 'shop_desc': self.shop_desc}

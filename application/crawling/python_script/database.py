@@ -1,9 +1,9 @@
 import pymysql
 
 shop_insert_sql = """
-        INSERT INTO shop(shop_name, shop_logo_url) 
-                VALUES (%s, %s)
-                ON DUPLICATE KEY UPDATE shop_logo_url = %s
+        INSERT INTO shop(shop_name, shop_logo_url, shop_desc) 
+                VALUES (%s, %s, %s)
+                ON DUPLICATE KEY UPDATE shop_logo_url = %s, shop_desc = %s
         """
 
 item_insert_sql = """
@@ -17,7 +17,7 @@ post_insert_sql = """
         """
 
 item_select_sql = """
-        SELECT product_name, brand, image_url, page_url, price, shop_name FROM item WHERE shop_name=%s ORDER BY id DESC
+        SELECT product_name, brand, image_url, page_url, price, shop_name FROM item WHERE post_id=%s
         """
 
 post_select_sql = """
@@ -33,44 +33,55 @@ def connect_contena_db():
                            cursorclass=pymysql.cursors.DictCursor)
 
 
-def select_item_with_shop_name(shop_name, size):
+def select_item_with_shop_name(shop_name):
     connection = connect_contena_db()
 
     try:
         with connection.cursor() as cursor:
-            cursor.execute(item_select_sql, (shop_name,))
-            items = cursor.fetchmany(size)
+
+            cursor.execute(post_select_sql, (shop_name,))
+            post = cursor.fetchone()
+            post_id = post['id']
+
+            cursor.execute(item_select_sql, (post_id,))
+            items = cursor.fetchall()
     finally:
         connection.close()
 
     return items
 
 
-def insert_shop_post_item_entity(new_items, shop_name, shop_logo_url):
+def insert_shop_post_item_entity(shop_data, scrapped_item):
     post = dict()
-    post['shop_name'] = shop_name
+    post['shop_name'] = shop_data['shop_name']
 
     shop = dict()
-    shop['shop_name'] = shop_name
-    shop['shop_logo_url'] = shop_logo_url
+    shop['shop_name'] = shop_data['shop_name']
+    shop['shop_logo_url'] = shop_data['shop_logo_url']
+    shop['shop_name'] = shop_data['shop_desc']
 
     connection = connect_contena_db()
 
     try:
         with connection.cursor() as cursor:
             # insert shop
-            cursor.execute(shop_insert_sql, (shop['shop_name'], shop['shop_logo_url'], shop['shop_logo_url']))
+            cursor.execute(shop_insert_sql,
+                           (shop_data['shop_name'],
+                            shop_data['shop_logo_url'], shop_data['shop_desc'],
+                            shop_data['shop_logo_url'], shop_data['shop_desc']
+                            )
+                           )
 
             # insert post
             cursor.execute(post_insert_sql, (post['shop_name']))
 
             # get id of inserted post
-            cursor.execute(post_select_sql, (shop_name,))
+            cursor.execute(post_select_sql, (shop_data['shop_name'],))
             post = cursor.fetchone()
             post_id = post['id']
 
             # insert items
-            for item in new_items:
+            for item in scrapped_item:
                 cursor.execute(item_insert_sql, (item['product_name'], item['brand'], item['image_url'],
                                                  item['page_url'], item['price'], item['shop_name'], post_id))
             connection.commit()
