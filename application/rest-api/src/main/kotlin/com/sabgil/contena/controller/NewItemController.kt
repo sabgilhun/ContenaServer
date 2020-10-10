@@ -12,12 +12,6 @@ import org.springframework.web.bind.annotation.RestController
 class NewItemController(
         private val postRepository: PostRepository
 ) {
-
-    @GetMapping("/")
-    fun getNewItemList2(): String {
-        return "hello"
-    }
-
     @GetMapping("/new_item")
     fun getNewItemList(
             @RequestParam(value = "post_id", defaultValue = "0") postId: Long
