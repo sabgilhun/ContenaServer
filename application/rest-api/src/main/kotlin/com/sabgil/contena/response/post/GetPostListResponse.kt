@@ -13,6 +13,7 @@ data class GetPostListResponse(
             @JsonProperty("upload_data") val uploadDate: String,
             @JsonProperty("shop_name") val shopName: String,
             @JsonProperty("shop_logo_url") val shopLogoUrl: String,
+            @JsonProperty("subscriber_count") val subscriberCount: Long,
             @JsonProperty("new_item_list") val newItemList: List<NewItem>
     )
 
@@ -41,6 +42,7 @@ data class GetPostListResponse(
                 uploadDate = uploadDate,
                 shopName = shopEntity?.shopName ?: "",
                 shopLogoUrl = shopEntity?.shopLogoUrl ?: "",
+                subscriberCount = shopEntity?.subscriptionEntities?.size?.toLong() ?: 0L,
                 newItemList = itemEntities.map { itemEntity -> itemEntity.mapToNewItem() }
         )
 
