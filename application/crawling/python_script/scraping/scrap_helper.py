@@ -1,6 +1,7 @@
 # constants
-old_item_size = 10
-headers = {'User-Agent': 'Mozilla/5.0'}
+LIMIT_NUMBER_OF_OLD_ITEM = 10
+LIMIT_NUMBER_OF_ITEM_IN_POST = 100
+HEADERS = {'User-Agent': 'Mozilla/5.0'}
 
 
 # functions

@@ -17,22 +17,24 @@ class BluesmansScraper:
     def scrap(self):
         # get old post items
         keys_of_old = \
-            list(map(lambda i: i['page_url'], database.select_item_with_shop_name(self.shop_name, old_item_size)))
+            list(map(
+                lambda i: i['page_url'],
+                database.select_item_with_shop_name(self.shop_name, LIMIT_NUMBER_OF_OLD_ITEM)
+            ))
 
         # logo scrap
-        soup = BeautifulSoup(requests.get(self.base_url, headers=headers).text, 'html.parser')
+        soup = BeautifulSoup(requests.get(self.base_url, headers=HEADERS).text, 'html.parser')
         self.shop_logo = self.base_url + soup.find_all('a', {'href': '/'})[0].find('img')['src']
 
         # first page scrap
         page_no = 1
         while True:
             items = BluesmansScraper.scrap_items(self, page_no)
-
             self.scrapped_items.extend(items)
             page_no += 1
             keys_of_new = list(map(lambda i: i['page_url'], items))
             index = search_first_index(keys_of_old, keys_of_new)
-            if index:
+            if index or len(self.scrapped_items) > LIMIT_NUMBER_OF_ITEM_IN_POST:
                 break
 
         shop = {'shop_name': self.shop_name, 'shop_logo_url': self.shop_logo, 'shop_desc': self.shop_desc}
@@ -40,7 +42,7 @@ class BluesmansScraper:
 
     def scrap_items(self, page_no):
         url = self.page_base_url + str(page_no)
-        request = requests.get(url, headers=headers)
+        request = requests.get(url, headers=HEADERS)
         soup = BeautifulSoup(request.text, 'html.parser')
 
         data = list()
