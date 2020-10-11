@@ -9,7 +9,7 @@ def search_first_index(keys_of_old, keys_of_new):
             if new == old:
                 return keys_of_new.index(new)
 
-    return None
+    return -1
 
 
 def remove_krw(price):
