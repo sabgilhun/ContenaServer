@@ -224,4 +224,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# venv
+python_script/venv/*
+
 # End of https://www.gitignore.io/api/macos,python,pycharm
