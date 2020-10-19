@@ -4,7 +4,7 @@ import database
 from scraping.scrap_helper import *
 
 
-class BrendaBrendenScrapper:
+class BrendaBrendenScraper:
     base_url = 'http://brendabrenden.com'
 
     shop_name = 'Brenda Brenden'

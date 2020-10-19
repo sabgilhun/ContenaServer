@@ -4,7 +4,7 @@ import database
 from scraping.scrap_helper import *
 
 
-class ModeManScrapper:
+class ModeManScraper:
     base_url = 'http://mode-man.com'
 
     shop_name = 'mode-man'
@@ -29,7 +29,7 @@ class ModeManScrapper:
         # first page scrap
         page_no = 1
         while True:
-            items = ModeManScrapper.scrap_items(self, page_no)
+            items = ModeManScraper.scrap_items(self, page_no)
             self.scrapped_items.extend(items)
             page_no += 1
             keys_of_new = list(map(lambda i: i['page_url'], items))
@@ -54,7 +54,7 @@ class ModeManScrapper:
 
         data = list()
         for item in soup.find_all('li', {'class': 'item infinite-item xans-record-'}):
-            data.append(ModeManScrapper.generate_dict_item(self, item))
+            data.append(ModeManScraper.generate_dict_item(self, item))
 
         print('complete scraping: ' + url)
 
