@@ -1,3 +1,5 @@
+from global_constants import *
+
 # constants
 HEADERS = {'User-Agent': 'Mozilla/5.0'}
 
@@ -18,3 +20,7 @@ def remove_krw(price):
 
 def remove_won_symbol(price):
     return price.replace("w", "").strip()
+
+
+def check_scrap_limit(page_no, scrapped_items):
+    return len(scrapped_items) > LIMIT_NUMBER_OF_SCRAPPED_ITEM or page_no > LIMIT_NUMBER_OF_SCRAPPING_PAGE

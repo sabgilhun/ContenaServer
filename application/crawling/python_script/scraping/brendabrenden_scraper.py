@@ -4,14 +4,14 @@ import database
 from scraping.scrap_helper import *
 
 
-class ModeManScrapper:
-    base_url = 'http://mode-man.com'
+class BrendaBrendenScrapper:
+    base_url = 'http://brendabrenden.com'
 
-    shop_name = 'mode-man'
+    shop_name = 'Brenda Brenden'
     shop_logo = ''
-    shop_desc = 'Denim Specialty Editing Shop Mode-Man 해외브랜드 데님 전문 편집 매장 홍대 모드맨'
+    shop_desc = '평범한 사람들을 위한 특별한 옷을 만드는 곳, 브렌다브렌든 - '
 
-    page_base_url = base_url + '/product/list.html?cate_no=354&page='
+    page_base_url = base_url + '/product/list.html?cate_no=72&page='
     scrapped_items = list()
 
     def scrap(self):
@@ -24,12 +24,12 @@ class ModeManScrapper:
 
         # logo scrap
         soup = BeautifulSoup(requests.get(self.base_url, headers=HEADERS).text, 'html.parser')
-        self.shop_logo = self.base_url + soup.find_all('a', {'href': '/index.html'})[0].find('img')['src']
+        self.shop_logo = self.base_url + soup.find_all('a', {'href': '/'})[0].find('img')['src']
 
         # first page scrap
         page_no = 1
         while True:
-            items = ModeManScrapper.scrap_items(self, page_no)
+            items = self.scrap_items(page_no)
             self.scrapped_items.extend(items)
             page_no += 1
             keys_of_new = list(map(lambda i: i['page_url'], items))
@@ -53,8 +53,8 @@ class ModeManScrapper:
         soup = BeautifulSoup(request.text, 'html.parser')
 
         data = list()
-        for item in soup.find_all('li', {'class': 'item infinite-item xans-record-'}):
-            data.append(ModeManScrapper.generate_dict_item(self, item))
+        for item in soup.find_all('li', {'class': 'item xans-record-'}):
+            data.append(self.generate_dict_item(item))
 
         print('complete scraping: ' + url)
 
@@ -67,19 +67,20 @@ class ModeManScrapper:
 
         item_dict['product_name'] = item.find('p', {'class': 'name'}).find('span').text
 
+        item_dict['brand'] = ""
+
+        item_dict['image_url'] = item.find('div', {'class': 'prodImg'}).find('img')['src'].replace('//', 'http://')
+
+        item_dict['page_url'] = self.base_url + item.find('a')['href']
+
         data_list = item.findAll('li', {'class': 'xans-record-'})
-        item_dict['brand'] = data_list[0].find('a').text
-
-        item_dict['image_url'] = \
-            item.find('img', {'class': 'lazy thumb-front'})['data-original'].replace("//", "http://")
-
-        item_dict['page_url'] = self.base_url + item.find('div', {'class': 'box'}).find('a')['href']
-
         item_dict['origin_price'] = None
         if len(data_list) == 3:
-            item_dict['origin_price'] = remove_won_symbol(data_list[1].findAll('span')[1].text)
-            item_dict['price'] = remove_won_symbol(data_list[2].findAll('span')[1].text)
+            item_dict['origin_price'] = data_list[0].findAll('span')[1].text
+            item_dict['price'] = data_list[2].findAll('span')[1].text
+        elif len(data_list) == 2:
+            item_dict['origin_price'] = data_list[0].findAll('span')[1].text
+            item_dict['price'] = data_list[1].findAll('span')[1].text
         else:
-            item_dict['price'] = remove_won_symbol(data_list[1].findAll('span')[1].text)
-
+            item_dict['price'] = data_list[0].findAll('span')[1].text
         return item_dict

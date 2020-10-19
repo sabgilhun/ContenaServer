@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 import database
 from scraping.scrap_helper import *
-from global_constants import *
 
 
 class BluesmansScraper:
@@ -35,7 +34,14 @@ class BluesmansScraper:
             page_no += 1
             keys_of_new = list(map(lambda i: i['page_url'], items))
             index = search_first_index(keys_of_old, keys_of_new)
-            if index >= 0 or len(self.scrapped_items) > LIMIT_NUMBER_OF_SCRAPPED_ITEM:
+
+            if index >= 0:
+                # index search success
+                break
+
+            if check_scrap_limit(page_no, self.scrapped_items):
+                # over limit
+                index = len(self.scrapped_items)
                 break
 
         shop = {'shop_name': self.shop_name, 'shop_logo_url': self.shop_logo, 'shop_desc': self.shop_desc}
