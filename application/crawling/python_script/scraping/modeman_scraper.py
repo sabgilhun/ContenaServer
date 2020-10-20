@@ -5,7 +5,7 @@ from scraping.scrap_helper import *
 
 
 class ModeManScraper:
-    base_url = 'http://mode-man.com'
+    base_url = 'https://www.mode-man.com'
 
     shop_name = 'mode-man'
     shop_logo = ''

@@ -5,7 +5,7 @@ from scraping.scrap_helper import *
 
 
 class BrendaBrendenScraper:
-    base_url = 'http://brendabrenden.com'
+    base_url = 'https://www.brendabrenden.com'
 
     shop_name = 'Brenda Brenden'
     shop_logo = ''

@@ -5,7 +5,7 @@ from scraping.scrap_helper import *
 
 
 class BluesmansScraper:
-    base_url = 'http://bluesman.co.kr'
+    base_url = 'https://www.bluesman.co.kr'
 
     shop_name = 'bluesman'
     shop_logo = ''
