@@ -5,7 +5,9 @@ import com.sabgil.contena.entitiy.ShopEntity
 import com.sabgil.contena.repository.RecommendRepository
 import com.sabgil.contena.repository.ShopRepository
 import com.sabgil.contena.repository.SubscriptionRepository
-import com.sabgil.contena.response.shop.GetShopListResponse
+import com.sabgil.contena.response.shop.GetAvailableShopListResponse
+import com.sabgil.contena.response.shop.GetRecommendShopListResponse
+import com.sabgil.contena.response.shop.GetSubscriptionShopListResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -18,19 +20,19 @@ class ShopController(
 ) {
 
     @GetMapping("/shop_list/recommend")
-    fun getRecommendShopList(): GetShopListResponse {
+    fun getRecommendShopList(): GetRecommendShopListResponse {
 
         val shopEntities = mutableListOf<ShopEntity>()
 
         recommendRepository.findAll().mapNotNullTo(shopEntities, RecommendEntity::shopEntity)
 
-        return GetShopListResponse.from(shopEntities)
+        return GetRecommendShopListResponse.from(shopEntities)
     }
 
     @GetMapping("/shop_list/available")
     fun getAvailableShopList(
             @RequestParam(value = "search_keyword", defaultValue = "") searchKeyword: String
-    ): GetShopListResponse {
+    ): GetAvailableShopListResponse {
 
         val shopEntities = if (searchKeyword.isNotEmpty()) {
             shopRepository.findByShopNameContaining(searchKeyword)
@@ -38,17 +40,17 @@ class ShopController(
             emptyList()
         }
 
-        return GetShopListResponse.from(shopEntities)
+        return GetAvailableShopListResponse.from(shopEntities)
     }
 
     @GetMapping("/shop_list/subscription")
     fun getSubscriptionShopList(
             @RequestParam(value = "user_id", defaultValue = "") userId: String
-    ): GetShopListResponse {
+    ): GetSubscriptionShopListResponse {
         val shopEntities = subscriptionRepository.findByUserId(userId)
                 .filter { it.shopEntity != null }
                 .map { it.shopEntity!! }
 
-        return GetShopListResponse.from(shopEntities)
+        return GetSubscriptionShopListResponse.from(shopEntities)
     }
 }

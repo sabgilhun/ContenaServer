@@ -27,6 +27,9 @@ class ItemEntity(
         @Column(name = "price")
         var price: String = "",
 
+        @Column(name = "origin_price")
+        var originPrice: String? = null,
+
         @ManyToOne
         @JoinColumn(name = "post_id")
         var postEntity: PostEntity? = null

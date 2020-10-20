@@ -3,7 +3,7 @@ package com.sabgil.contena.response.shop
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.sabgil.contena.entitiy.ShopEntity
 
-data class GetShopListResponse(
+data class GetRecommendShopListResponse(
         @JsonProperty("shop_list") val shopList: List<Shop>
 ) {
     data class Shop(
@@ -14,7 +14,7 @@ data class GetShopListResponse(
     )
 
     companion object {
-        fun from(shopEntities: List<ShopEntity>) = GetShopListResponse(
+        fun from(shopEntities: List<ShopEntity>) = GetRecommendShopListResponse(
                 shopList = shopEntities.map { it.mapToShop() }
         )
 

@@ -22,7 +22,8 @@ data class GetPostListResponse(
             @JsonProperty("brand") val brand: String,
             @JsonProperty("image_url") val imageUrl: String,
             @JsonProperty("page_url") val pageUrl: String,
-            @JsonProperty("price") val price: String
+            @JsonProperty("price") val price: String,
+            @JsonProperty("origin_price") val originPrice: String?
     )
 
     companion object {
@@ -51,7 +52,8 @@ data class GetPostListResponse(
                 brand = brand,
                 imageUrl = imageUrl,
                 pageUrl = pageUrl,
-                price = price
+                price = price,
+                originPrice = originPrice
         )
     }
 }
