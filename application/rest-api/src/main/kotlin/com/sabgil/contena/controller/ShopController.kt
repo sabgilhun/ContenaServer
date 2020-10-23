@@ -5,6 +5,7 @@ import com.sabgil.contena.entitiy.ShopEntity
 import com.sabgil.contena.repository.RecommendRepository
 import com.sabgil.contena.repository.ShopRepository
 import com.sabgil.contena.repository.SubscriptionRepository
+import com.sabgil.contena.response.shop.GetAllShopListResponse
 import com.sabgil.contena.response.shop.GetAvailableShopListResponse
 import com.sabgil.contena.response.shop.GetRecommendShopListResponse
 import com.sabgil.contena.response.shop.GetSubscriptionShopListResponse
@@ -41,6 +42,12 @@ class ShopController(
         }
 
         return GetAvailableShopListResponse.from(shopEntities)
+    }
+
+    @GetMapping("/shop_list/all")
+    fun getAllShopList(): GetAllShopListResponse {
+        val shopEntities = shopRepository.findAll()
+        return GetAllShopListResponse.from(shopEntities)
     }
 
     @GetMapping("/shop_list/subscription")
