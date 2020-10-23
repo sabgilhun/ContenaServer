@@ -10,19 +10,22 @@ data class GetSubscriptionShopListResponse(
             @JsonProperty("shop_name") val shopName: String,
             @JsonProperty("shop_logo_url") val shopLogoUrl: String,
             @JsonProperty("subscriber_count") val subscriberCount: Long,
-            @JsonProperty("shop_description") val shopDescription: String
+            @JsonProperty("shop_description") val shopDescription: String,
+            @JsonProperty("is_subscribed") val isSubscribed: Boolean
     )
 
     companion object {
-        fun from(shopEntities: List<ShopEntity>) = GetSubscriptionShopListResponse(
-                shopList = shopEntities.map { it.mapToShop() }
-        )
+        fun from(shopEntities: List<ShopEntity>) =
+                GetSubscriptionShopListResponse(
+                        shopList = shopEntities.map { it.mapToShop() }
+                )
 
         private fun ShopEntity.mapToShop() = Shop(
                 shopName = shopName,
                 shopLogoUrl = shopLogoUrl,
                 subscriberCount = subscriptionEntities.size.toLong(),
-                shopDescription = shopDescription
+                shopDescription = shopDescription,
+                isSubscribed = true
         )
     }
 }
