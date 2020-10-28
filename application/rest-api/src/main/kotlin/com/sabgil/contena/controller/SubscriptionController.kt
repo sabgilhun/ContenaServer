@@ -43,7 +43,9 @@ class SubscriptionController(
         val updatedShopEntity = shopRepository.findByShopName(subscriptionRequest.shopName)
                 ?: throw NotFoundException("해당 쇼핑몰은 쇼핑몰 리스트에 존재하지 않습니다.")
 
-        return PostSubscriptionResponse.from(subscriptionRequest.userId, updatedShopEntity)
+        val subscriptionEntities = subscriptionRepository.findByUserId(subscriptionRequest.userId)
+
+        return PostSubscriptionResponse.from(subscriptionRequest.userId, updatedShopEntity, subscriptionEntities)
     }
 
     @PostMapping("/unsubscription")
@@ -68,6 +70,8 @@ class SubscriptionController(
         val updatedShopEntity = shopRepository.findByShopName(subscriptionRequest.shopName)
                 ?: throw NotFoundException("해당 쇼핑몰은 쇼핑몰 리스트에 존재하지 않습니다.")
 
-        return PostUnsubscriptionResponse.from(subscriptionRequest.userId, updatedShopEntity)
+        val subscriptionEntities = subscriptionRepository.findByUserId(subscriptionRequest.userId)
+
+        return PostUnsubscriptionResponse.from(subscriptionRequest.userId, updatedShopEntity, subscriptionEntities)
     }
 }
