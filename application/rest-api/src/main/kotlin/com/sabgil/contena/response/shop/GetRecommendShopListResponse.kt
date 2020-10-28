@@ -16,17 +16,17 @@ data class GetRecommendShopListResponse(
     )
 
     companion object {
-        fun from(shopEntities: List<ShopEntity>, subscriptionEntities: List<SubscriptionEntity>) =
+        fun from(shopEntities: List<ShopEntity>, userSubscriptionEntities: List<SubscriptionEntity>) =
                 GetRecommendShopListResponse(
-                        shopList = shopEntities.map { it.mapToShop(subscriptionEntities) }
+                        shopList = shopEntities.map { it.mapToShop(userSubscriptionEntities) }
                 )
 
-        private fun ShopEntity.mapToShop(subscriptionEntities: List<SubscriptionEntity>) = Shop(
+        private fun ShopEntity.mapToShop(userSubscriptionEntities: List<SubscriptionEntity>) = Shop(
                 shopName = shopName,
                 shopLogoUrl = shopLogoUrl,
                 subscriberCount = subscriptionEntities.size.toLong(),
                 shopDescription = shopDescription,
-                isSubscribed = subscriptionEntities.map(SubscriptionEntity::shopEntity).contains(this)
+                isSubscribed = userSubscriptionEntities.map(SubscriptionEntity::shopEntity).contains(this)
         )
     }
 }
