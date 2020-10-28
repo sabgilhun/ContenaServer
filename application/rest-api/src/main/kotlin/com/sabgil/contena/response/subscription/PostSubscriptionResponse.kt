@@ -2,7 +2,6 @@ package com.sabgil.contena.response.subscription
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.sabgil.contena.entitiy.ShopEntity
-import com.sabgil.contena.entitiy.SubscriptionEntity
 
 data class PostSubscriptionResponse(
         @JsonProperty("user_id") val userId: String,
@@ -17,21 +16,17 @@ data class PostSubscriptionResponse(
     )
 
     companion object {
-        fun from(
-                userId: String,
-                shopEntity: ShopEntity,
-                subscriptionEntities: List<SubscriptionEntity>
-        ) = PostSubscriptionResponse(
+        fun from(userId: String, shopEntity: ShopEntity) = PostSubscriptionResponse(
                 userId = userId,
-                updatedShop = shopEntity.mapToShop(subscriptionEntities)
+                updatedShop = shopEntity.mapToShop()
         )
 
-        private fun ShopEntity.mapToShop(subscriptionEntities: List<SubscriptionEntity>) = Shop(
+        private fun ShopEntity.mapToShop() = Shop(
                 shopName = shopName,
                 shopLogoUrl = shopLogoUrl,
                 subscriberCount = subscriptionEntities.size.toLong(),
                 shopDescription = shopDescription,
-                isSubscribed = subscriptionEntities.map(SubscriptionEntity::shopEntity).contains(this)
+                isSubscribed = true
         )
     }
 }
