@@ -10,6 +10,7 @@ data class GetNewItemListResponse(
         @JsonProperty("new_item_list") val newItemList: List<NewItem>
 ) {
     data class NewItem(
+            @JsonProperty("item_id") val itemId: Long,
             @JsonProperty("product_name") val productName: String,
             @JsonProperty("brand") val brand: String,
             @JsonProperty("image_url") val imageUrl: String,
@@ -30,6 +31,7 @@ data class GetNewItemListResponse(
         }
 
         private fun ItemEntity.mapToNewItem() = NewItem(
+                itemId = id,
                 productName = productName,
                 brand = brand,
                 imageUrl = imageUrl,
